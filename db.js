@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const path = require('path');
-var config = require(path.join(__dirname, '../config/config'));
+var config = require(path.join(__dirname, './config/config'));
 
 var db = {};
 
