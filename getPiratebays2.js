@@ -1,11 +1,11 @@
 var request = require('request');
 var cheerio = require('cheerio');
-var db = require('./db');
+//var db = require('./db');
 
 
-module.exports = function (i) {
-    var id = i;
-    var url = 'https://proxyship.cf/browse/200/' + id + '/3';
+module.exports = function (str) {
+    
+    var url = 'https://proxyship.cf/search/' + str + '/0/99/200';
     var name, type, size, imdb, uploaded, downloadurl;
     request(url, function (error, response, body) {
         if (body != undefined) {
@@ -19,7 +19,15 @@ module.exports = function (i) {
                     $("#searchResult > tbody > tr > td > a[title='Download this torrent using magnet']").each(function (i3, elem3) {
                         download = $(this);
                         if (i3 == i1 && i1 == i2) {
-                            console.log(i1 + ":" + name.text() + "|" + size.text());//+"|"+ download.attr("href"));
+                            var sql = "INSERT INTO piratebays (id,name,type,size,imdb,uploaded,downloadurl) VALUES (\""
+                            + i1 + "\",\""
+                            + name.text() + "\",\""
+                            + "Video" + "\",\""
+                            + size.text().split(",")[1] + "\",\""
+                            + "" + "\",\""
+                            + size.text().split(",")[0] + "\",\""
+                            + download.attr("href") + "\")";
+                            console.log(sql);
                         }
 
                     });
